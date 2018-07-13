@@ -1,6 +1,5 @@
 import flask
 import v04 as wat_api
-wat = wat_api.Wat() 
 #from flask import render_template
 #from flask import Flask
 
@@ -22,57 +21,60 @@ def myindex():
     #return flask.render_template('index.html', title=None, user='Sohia')
     return flask.render_template('index.html', user = 'Anjali', marks = 60)
 
-question_list = ['is anjali cute?','Are you crazy?','What do you want?']
-state = -2
-name = ''
-score = []
-question = ''
-reply = ''
+
+class Globals():
+    def __init__(self):
+        self.question_list = ['is anjali cute?','Are you crazy?','What do you want?']
+        self.state = -2 #assume the last page with the end test so the next page is start test
+        self.name = ''
+        self.score = []
+        self.question = ''
+        self.reply = ''
+        self.comments = ''
+        self.previous_test = False
+    def __setattr__(self,key,value):
+        self.__dict__[key] = value
+    def to_dict(self):
+        return self.__dict__
+
+wat = wat_api.Wat() 
+g = Globals()
 
 @app.route('/test', methods=['POST', 'GET'])
 def test():
-    #state = int(page)
-    global state
-    global score
-    global reply
-    global name
+    global g
+    global wat
     if flask.request.method == 'GET':
-        state = -1
+        g.state = -1
     elif flask.request.method == 'POST':
         # Processing inputs from old state
-        if state == -1:
-            name = flask.request.form['query']
-            score = []
-            reply = ''
-        elif state >= 0:
-            reply = flask.request.form['query']
-            score.append(reply)
+        if g.state == -1:
+            g.name = flask.request.form['query']
+            g.score = []
+            g.reply = ''
+        elif g.state == -2 and g.previous_test:
+            g.comments = flask.request.form['query']
+        elif g.state >= 0:
+            g.reply = flask.request.form['query']
+            g.score.append(g.reply)
     
         #Change state
-        state += 1
-        if state == len(question_list):
-            state = -2
+        g.state += 1
+        if g.state == len(g.question_list):
+            g.state = -2
 
         # Computing outputs for your current state
-        if state >= 0:
-            question = question_list[state]
-        elif state == -2:
+        if g.state >= 0:
+            g.question = g.question_list[g.state]
+        elif g.state == -2:
+            # Compute socres
             values = []
-            for i,elem in enumerate(score):
-                values.append(wat.identify('Q'+str(i + 1),elem))
-            join_score = ','.join(score)
+            for i,elem in enumerate(g.score):
+                values.append(wat.check_answer('Q'+str(i + 1),elem))
+            g.join_score = ','.join(g.score)
+            g.join_values = ','.join([str(x) for x in values])
+            g.total_score = sum(elem[1] for elem in values)
+            # Read comments
+            g.previous_test = True
             
-    if state == -1:   
-        return flask.render_template('test_form.html', state = state,)
-    elif state == -2:
-        return flask.render_template('test_form.html', state = state, name = name, 
-                                     score = join_score, reply = reply)
-    else:
-        return flask.render_template('test_form.html', state = state, question = question, 
-                                     reply = reply)
-
-'''
--1: --
-    -2: name, score
-    : question, reply
-'''    
+    return flask.render_template('test_form.html', p = g)
