@@ -2,11 +2,17 @@
 <html>
    <body>
       {% if state == -1 %}
+      <!-- Login page -->
+      <p><img src="http://www.naturalprogramming.com/images/smilingpython.gif"></p>
+
           <h1>Hello !</h1>
           <form method="post"> Enter name to start:<br>
               <input type="text" name="query">
           </form>
-      {% elif state == -2 %}  
+          
+          
+      {% elif state == -2 %}
+      <!-- Finish test, score page -->  
           <h1> {{name}} you have finished the test! </h1>
         
           Your answers were: {{score}}
@@ -17,6 +23,8 @@
           <hr>
           {{reply}}
       {% else %}
+      <!--Question page-->
+      
       <h1> Answer this question: </h1>
       <br>
       <form method="post"> {{question}} <br>
