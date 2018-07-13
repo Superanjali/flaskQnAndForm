@@ -7,11 +7,15 @@
               <input type="text" name="query">
           </form>
       {% elif state == -2 %}  
-          <h1> {{name}} you have finished the test! </h>
-          Your score is: {{score}}
+          <h1> {{name}} you have finished the test! </h1>
+        
+          Your answers were: {{score}}
+          <br>
           <form method="post">
               <input type="submit" value="Continue">
           </form>
+          <hr>
+          {{reply}}
       {% else %}
       <h1> Answer this question: </h1>
       <br>
@@ -19,7 +23,9 @@
       <input type="text" name="query">
       </form>
       <hr>
-      {{ reply }}
+      {% if state > 0 %}
+          {{ reply }}
+      {% endif %}
       {% endif %}
    </body>
 </html>
