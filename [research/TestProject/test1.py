@@ -1,4 +1,6 @@
 import flask
+import v04 as wat_api
+wat = wat_api.Wat() 
 #from flask import render_template
 #from flask import Flask
 
@@ -55,6 +57,9 @@ def test():
         if state >= 0:
             question = question_list[state]
         elif state == -2:
+            values = []
+            for i,elem in enumerate(score):
+                values.append(wat.identify('Q'+str(i + 1),elem))
             join_score = ','.join(score)
             
     if state == -1:   
