@@ -21,24 +21,31 @@ def myindex():
     return flask.render_template('index.html', user = 'Anjali', marks = 60)
 
 question_list = ['is anjali cute?','Are you crazy?','What do you want?']
-state = -1
+state = -2
 name = ''
-score = 0
+score = []
 question = ''
 reply = ''
 
-@app.route('/test/<state>', methods=['POST', 'GET'])
-def test(state):
+@app.route('/test', methods=['POST', 'GET'])
+def test():
+    #state = int(page)
+    global state
+    global score
+    global reply
+    global name
     if flask.request.method == 'GET':
         state = -1
     elif flask.request.method == 'POST':
         # Processing inputs from old state
         if state == -1:
             name = flask.request.form['query']
-            score = 0
+            score = []
+            reply = ''
         elif state >= 0:
             reply = flask.request.form['query']
-            score += ',' + reply
+            score.append(reply)
+    
         #Change state
         state += 1
         if state == len(question_list):
@@ -47,9 +54,18 @@ def test(state):
         # Computing outputs for your current state
         if state >= 0:
             question = question_list[state]
-        
-    return flask.render_template('test_form.html', **locals())
-    
+        elif state == -2:
+            join_score = ','.join(score)
+            
+    if state == -1:   
+        return flask.render_template('test_form.html', state = state,)
+    elif state == -2:
+        return flask.render_template('test_form.html', state = state, name = name, 
+                                     score = join_score, reply = reply)
+    else:
+        return flask.render_template('test_form.html', state = state, question = question, 
+                                     reply = reply)
+
 '''
 -1: --
     -2: name, score
