@@ -20,12 +20,38 @@ def myindex():
     #return flask.render_template('index.html', title=None, user='Sohia')
     return flask.render_template('index.html', user = 'Anjali', marks = 60)
 
-@app.route('/test', methods=['POST', 'GET'])
-def test():
-    if flask.request.method == 'POST':
-        text = flask.request.form['query']
-    else:
-        text = 'Waiting user input'
-    print(text)
-    return flask.render_template('test_form.html', reply = text)
+question_list = ['is anjali cute?','Are you crazy?','What do you want?']
+state = -1
+name = ''
+score = 0
+question = ''
+reply = ''
 
+@app.route('/test/<state>', methods=['POST', 'GET'])
+def test(state):
+    if flask.request.method == 'GET':
+        state = -1
+    elif flask.request.method == 'POST':
+        # Processing inputs from old state
+        if state == -1:
+            name = flask.request.form['query']
+            score = 0
+        elif state >= 0:
+            reply = flask.request.form['query']
+            score += ',' + reply
+        #Change state
+        state += 1
+        if state == len(question_list):
+            state = -2
+
+        # Computing outputs for your current state
+        if state >= 0:
+            question = question_list[state]
+        
+    return flask.render_template('test_form.html', **locals())
+    
+'''
+-1: --
+    -2: name, score
+    : question, reply
+'''    

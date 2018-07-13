@@ -1,12 +1,25 @@
 <!doctype html>
 <html>
    <body>
-      <h1> Hello ! </h1>
+      {% if state == -1 %}
+          <h1>Hello !</h1>
+          <form method="post"> Enter name to start:<br>
+              <input type="text" name="query">
+          </form>
+      {% elif state == -2 %}  
+          <h1> {{name}} you have finished the test! </h>
+          Your score is: {{score}}
+          <form method="post">
+              <input type="submit" value="Continue">
+          </form>
+      {% else %}
+      <h1> Answer this question: </h1>
       <br>
-      <form method="post"> User input:<br>
+      <form method="post"> {{question}} <br>
       <input type="text" name="query">
       </form>
       <hr>
       {{ reply }}
+      {% endif %}
    </body>
 </html>
