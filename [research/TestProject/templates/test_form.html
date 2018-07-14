@@ -21,10 +21,16 @@ Comments: {{p.comments}}
             <!-- Finish test, score page --> 
             <img src="https://thumbs.gfycat.com/AmazingLegalGiantschnauzer-max-1mb.gif" width=200 hight=200> 
             <h1> {{p.name}} you have finished the test! </h1>
-            Your answers were: {{p.score}} <br>
-            Your scores are: {{p.join_values}} <br>
-            You have answered {{p.notrue}} out of {{p.noq}} questions correctly
-            <br>
+            <p>Your answers were: 
+            <pre>{{p.score}} 
+            </pre></p>
+            <p>Your individual scores are: 
+            <pre>{{p.join_values}} 
+            </pre></p>
+            <p>You have answered <b>{{p.notrue}}</b> out of <b>{{p.noq}}</b> questions correctly
+            </p>
+            <p>You received <b>{{p.points}}</b> points out of <b>{{p.total_points}}</b>
+            </p>
             <form method="post">
             Leave any comments below:<br>
             <input type="text" name = "query"><br>
