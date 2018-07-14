@@ -40,8 +40,8 @@ def readExamples(Qno):
     with open(csvname,'a') as f:
          for line in wro:
             f.write(line+',no\n')   
-    return ans,wro
-    
+    #return ans,wro
+    return ans[0], ans[1:], wro
 
 def identify(assistant, workspace_id, answer):
  
@@ -54,12 +54,12 @@ def identify(assistant, workspace_id, answer):
     return [[elem['intent'], elem['confidence']] for elem in response['intents']]
 
 
-def add_intent(assistant,workspace_id,q1Examples, Q_name):
+def add_intent(assistant,workspace_id,title,q1Examples, Q_name):
     examples = [{'text': line} for line in q1Examples]
     response = assistant.create_intent(
         workspace_id=workspace_id,
         intent= Q_name,
-        description= 'string',
+        description= title,
         examples= examples)
     #print(json.dumps(response, indent=2))
     return json.dumps(response, indent=2)
@@ -76,6 +76,7 @@ def listIntents(assistant,workspace_id):
     return res
 
 # Main code #########################################
+
 
 class Wat():
     def __init__(self):
@@ -115,11 +116,11 @@ class Wat():
                 return_str += 'Error: intent %s already exists' % text + '_no' + '\n'
                 return return_str
             return_str += 'Create ' + str(line[1:]) + '\n'
-            ans,wrong = readExamples(text) 
+            title, ans,wrong = readExamples(text) 
            # print(ans,wrong)
             return_str += str(ans) + str(wrong) +'\n'
-            add_intent(self.assistant,self.workspace_id,ans,text)
-            add_intent(self.assistant,self.workspace_id,wrong,text +'_no')
+            add_intent(self.assistant,self.workspace_id,title,ans,text)
+            add_intent(self.assistant,self.workspace_id,title,wrong,text +'_no')
         elif user == 'd':
             l = listIntents(self.assistant,self.workspace_id)
             if not text in l:
@@ -140,11 +141,12 @@ class Wat():
         elif user == 'u':
             #print ('Update',line[1:])
             return_str += 'Update ' + str(line[1:]) + '\n'
-            ans, wrong = readExamples(text)
+            title, ans, wrong = readExamples(text)
             response = self.assistant.update_intent(
                     workspace_id=self.workspace_id,
                     intent= text,
-                    new_examples = ans)
+                    new_examples = ans,
+                    new_description = title)
             #print(json.dumps(response, indent=2))
             return_str += json.dumps(response, indent=2) + '\n'
         elif user == 'g':
@@ -152,9 +154,10 @@ class Wat():
             return_str += 'Get' + str(line[1:]) + '\n'
             response = self.assistant.get_intent(
                     workspace_id=self.workspace_id, intent= text, export=True)
-            answer =  [elem['text'] for elem in response['examples']]
-            return_str += str(answer) + '\n'
-            #print(json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
+            answer = response["description"] + '\n'
+            answer +=  str([elem['text'] for elem in response['examples']])
+            return_str += answer + '\n'
             #return_str += json.dumps(response,indent=2) + '\n'
             '''Deprecated
         elif user == 'a':

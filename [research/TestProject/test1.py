@@ -77,6 +77,8 @@ def test():
             g.join_score = ','.join(g.score)
             g.join_values = ','.join([str(x) for x in values])
             g.total_score = sum(elem[1] for elem in values)
+            g.notrue = sum(elem[0] for elem in values)
+            g.noq = len(values)
             # Read comments
             g.previous_test = True
             
