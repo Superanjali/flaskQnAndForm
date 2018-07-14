@@ -24,7 +24,7 @@ def myindex():
 
 class Globals():
     def __init__(self):
-        self.question_list = ['is anjali cute?','Are you crazy?','What do you want?']
+        self.question_list = ['State a reason why a scorpion is not an insect.','State a similarity between the characteristics of a frog and a crocodile.','The tadpole has a different breathing method compared to the adult frog. Explain why this is so.']
         self.state = -2 #assume the last page with the end test so the next page is start test
         self.name = ''
         self.score = []
