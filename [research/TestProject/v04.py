@@ -77,6 +77,7 @@ def listIntents(assistant,workspace_id):
 
 # Main code #########################################
 
+
 class Wat():
     def __init__(self):
         self.assistant = AssistantV1(
