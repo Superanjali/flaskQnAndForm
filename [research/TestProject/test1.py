@@ -75,11 +75,14 @@ def test():
             values = []
             for i,elem in enumerate(g.score):
                 values.append(wat.check_answer('Q'+str(i + 1),elem))
-            g.join_score = ','.join(g.score)
-            g.join_values = ','.join([str(x) for x in values])
+            pretty_values = [(elem[0],'%.2f' % elem[1]) for elem in values]
+            #g.join_score = ','.join(g.score)
+            g.join_values = ','.join([str(x) for x in pretty_values])
             g.total_score = sum(elem[1] for elem in values)
             g.notrue = sum(elem[0] for elem in values)
             g.noq = len(values)
+            g.points = '%.2f' % sum(100*elem[1] for elem in values)
+            g.total_points = g.noq*100
             # Read comments
             g.previous_test = True
             
@@ -92,7 +95,7 @@ def admin():
     if flask.request.method == 'POST':
         g.reply = flask.request.form['query']
         if g.reply == 'l':
-            g.wat_reply = str(wat.question_list())
+            g.wat_reply = '\n'.join(wat.question_list())
         else:
             g.wat_reply = wat.do_stuff(g.reply)
         #Replace \n with <br>:
