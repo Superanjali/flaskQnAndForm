@@ -9,7 +9,7 @@
             <input type="text" name="query">
             </form>
             <hr>              
-            <h3> Debug environment <h3><br>
+            <h3> Debug environment </h3>
             <pre>
 Username: {{p.name}}
 Answers: {{p.score}}
@@ -18,11 +18,12 @@ Comments: {{p.comments}}
             </pre>
           
         {% elif p.state == -2 %}
-            <!-- Finish test, score page -->  
+            <!-- Finish test, score page --> 
+            <img src="https://thumbs.gfycat.com/AmazingLegalGiantschnauzer-max-1mb.gif" width=200 hight=200> 
             <h1> {{p.name}} you have finished the test! </h1>
             Your answers were: {{p.score}} <br>
             Your scores are: {{p.join_values}} <br>
-            Total score: {{p.total_score}} <br>
+            You have answered {{p.notrue}} out of {{p.noq}} questions correctly
             <br>
             <form method="post">
             Leave any comments below:<br>
@@ -30,7 +31,7 @@ Comments: {{p.comments}}
             <input type="submit" value="Continue">
             </form>
             <hr>
-            <h3> Debug environment <h3><br>
+            <h3> Debug environment </h3>
             <pre>
 Username: {{p.name}}
 Last input: {{p.reply}}
@@ -39,14 +40,14 @@ Answers: {{p.score}}
 
         {% else %}
             <!--Question page-->
+            <img src="https://steemitimages.com/DQmazeisMMzLsezVDVvxoHythfiGpWQU4bKierPfd2ogs7i/science-03.png" width=200 hight=200>
             <h1> Answer this question: </h1>
             <br>
             <form method="post"> {{p.question}} <br>
-            <img src="https://steemitimages.com/DQmazeisMMzLsezVDVvxoHythfiGpWQU4bKierPfd2ogs7i/science-03.png" width=200 hight=200>
             <input type="text" name="query">
             </form>
             <hr>
-            <h3> Debug environment <h3><br>
+            <h3> Debug environment </h3>
             <pre>
 Username: {{p.name}}
 {% if p.state > 0 %}
