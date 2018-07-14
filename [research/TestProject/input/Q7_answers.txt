@@ -1,3 +1,4 @@
+A frog lays many eggs at a time. Explain how this ensures the survival of the frog.
 Some of the eggs might be eaten while others are left to hatch so that they can grow into adults and reproduce.
 Some of the eggs might be eaten while others are left to hatch so that they can grow into adults and continue the life cycle.
 If some eggs are eaten by predators or cannot hatch, others will hatch and grow into adult frogs and reproduce.This ensures the survival of the frogs.
