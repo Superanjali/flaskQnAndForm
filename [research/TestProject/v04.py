@@ -100,47 +100,51 @@ class Wat():
         line = inp.split()
         text = ' '.join(line[1:])
         user = line[0]
-        if user == 'x':
+        '''Deprecated
+    	 if user == 'x':
             #print('Exit')
             return_str += 'Exit' + '\n'
             return return_str
-            
-        elif user == 'c':
+        '''    
+        if user == 'c':
             l = listIntents(self.assistant,self.workspace_id)
             if text in l:
-                #print('Error intent %s already exists' % text)
-                return_str += 'Error intent %s already exists' % text + '\n'
+                return_str += 'Error: intent %s already exists' % text + '\n'
                 return return_str
             if text + '_no' in l:
-                #print('Error intent %s already exists' % text + '_no')
-                return_str += 'Error intent %s already exists' % text + '_no' + '\n'
+                return_str += 'Error: intent %s already exists' % text + '_no' + '\n'
                 return return_str
-            #print('Create',line[1:])
-            return_str += 'Create' + str(line[1:]) + '\n'
+            return_str += 'Create ' + str(line[1:]) + '\n'
             ans,wrong = readExamples(text) 
            # print(ans,wrong)
             return_str += str(ans) + str(wrong) +'\n'
             add_intent(self.assistant,self.workspace_id,ans,text)
             add_intent(self.assistant,self.workspace_id,wrong,text +'_no')
         elif user == 'd':
-            #print('Delete',line[1:])
-            return_str += 'Delete' + str(line[1:]) + '\n'
+            l = listIntents(self.assistant,self.workspace_id)
+            if not text in l:
+                return_str += 'Error: intent %s does not exist' % text + '\n'
+                return return_str
+            if not text + '_no' in l:
+                return_str += 'Error: intent %s does not exist' % text + '_no' + '\n'
+                return return_str
+            return_str += 'Delete ' + str(line[1:]) + '\n'
             response = self.assistant.delete_intent(workspace_id=self.workspace_id, intent = text)
             response = self.assistant.delete_intent(workspace_id=self.workspace_id, intent = text + '_no')
         elif user == 'l':
             #print('List',line[1:])
-            return_str += 'List' + str(line[1:]) + '\n'
+            return_str += 'List ' + str(line[1:]) + '\n'
             response = self.assistant.list_intents(workspace_id=self.workspace_id, export=True)
             #print(json.dumps(response, indent=2))
             return_str += json.dumps(response, indent=2) + '\n'
         elif user == 'u':
             #print ('Update',line[1:])
-            return_str += 'Update' + str(line[1:]) + '\n'
+            return_str += 'Update ' + str(line[1:]) + '\n'
+            ans, wrong = readExamples(text)
             response = self.assistant.update_intent(
-            workspace_id=self.workspace_id,
-            intent= text,
-            new_intent='updated_test_intent',
-            new_description='Updated test intent.')
+                    workspace_id=self.workspace_id,
+                    intent= text,
+                    new_examples = ans)
             #print(json.dumps(response, indent=2))
             return_str += json.dumps(response, indent=2) + '\n'
         elif user == 'g':
@@ -150,6 +154,7 @@ class Wat():
                     workspace_id=self.workspace_id, intent= text, export=True)
             #print(json.dumps(response, indent=2))
             return_str += json.dumps(response,indent=2) + '\n'
+            '''Deprecated
         elif user == 'a':
             answer = input(self.qname[text]+'\n')
             res = identify(self.assistant, param_workspace_id, answer)
@@ -189,11 +194,11 @@ class Wat():
             
             #print('total Score: %.1d out of %d' % (total, len(lyes)*100)) 
             return_str += 'Total Score: %.1d out of %d' % (total,len(lyes)*100) +'\n'
-        
+            '''
         elif user == 'lw':
             res = listWorkspace(self.assistant)
             #print('/n/n'.join([x+':'+res[x] for x in res]))
-            return_str += '/n/n'.join([x+':'+res[x] for x in res]) +'\n'
+            return_str += '\n'.join([x+':'+res[x] for x in res]) +'\n'
         elif user == 'uw':
             res = listWorkspace(self.assistant)
             if text in res:
@@ -223,3 +228,5 @@ class Wat():
         else:
             return False, res[0][1]
         
+# Main code #########################################################
+            

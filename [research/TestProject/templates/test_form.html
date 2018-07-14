@@ -11,10 +11,10 @@
             <hr>              
             <h3> Debug environment <h3><br>
             <pre>
-            Username: {{p.reply}}
-            Answers: {{p.score}}
-            Score: {{p.join_values}}
-            Comments: {{p.comments}}
+Username: {{p.reply}}
+Answers: {{p.score}}
+Score: {{p.join_values}}
+Comments: {{p.comments}}
             </pre>
           
         {% elif p.state == -2 %}
@@ -32,7 +32,8 @@
             <hr>
             <h3> Debug environment <h3><br>
             <pre>
-            {{p.reply}}
+Last input: {{p.reply}}
+Answers: {{p.score}}
             </pre>
 
         {% else %}
@@ -46,9 +47,9 @@
             <hr>
             <h3> Debug environment <h3><br>
             <pre>
-            {% if p.state > 0 %}
-                {{ p.reply }}
-            {% endif %}
+{% if p.state > 0 %}
+Last answer: {{ p.reply }}
+{% endif %}
             </pre>
         {% endif %}
    </body>

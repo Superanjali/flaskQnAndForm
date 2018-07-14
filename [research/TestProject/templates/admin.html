@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+    <body>
+        <h1> Manage Watson Assistant environment</h1>
+        <p> Options:
+        <pre>
+c &ltname&gt - create intent &ltname&gt
+d &ltname&gt - delete intent &ltname&gt
+u &ltname&gt - update intent &ltname&gt
+g &ltname&gt - describe intent &ltname&gt        
+l - list intents
+li - list intents
+lw - list workspaces
+uw - change workspace
+        </pre>
+        </p>
+        <form method="post"> Enter command:<br>
+        <input type="text" name="query">
+        </form>
+        <hr>
+        <h3> Watson answer: </h3>
+        <pre>
+{{p.wat_reply}}
+        </pre> 
+        <hr>
+        <h3> Debug environment </h3>
+        <pre>
+{{p.reply}}
+        </pre>   
+    </body>
+</html>

@@ -150,6 +150,7 @@ class Wat():
                     workspace_id=self.workspace_id, intent= text, export=True)
             #print(json.dumps(response, indent=2))
             return_str += json.dumps(response,indent=2) + '\n'
+        ''' Deprecated 
         elif user == 'a':
             answer = input(self.qname[text]+'\n')
             res = identify(self.assistant, param_workspace_id, answer)
@@ -190,6 +191,8 @@ class Wat():
             #print('total Score: %.1d out of %d' % (total, len(lyes)*100)) 
             return_str += 'Total Score: %.1d out of %d' % (total,len(lyes)*100) +'\n'
         
+        # End deprecated 'a' and 't' options
+        '''
         elif user == 'lw':
             res = listWorkspace(self.assistant)
             #print('/n/n'.join([x+':'+res[x] for x in res]))

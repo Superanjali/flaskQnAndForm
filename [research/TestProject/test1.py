@@ -32,6 +32,7 @@ class Globals():
         self.reply = ''
         self.comments = ''
         self.previous_test = False
+        self.wat_reply = 'Waiting for command'
     def __setattr__(self,key,value):
         self.__dict__[key] = value
     def to_dict(self):
@@ -78,3 +79,18 @@ def test():
             g.previous_test = True
             
     return flask.render_template('test_form.html', p = g)
+
+@app.route('/admin', methods=['POST', 'GET'])
+def admin():
+    global g
+    global wat
+    if flask.request.method == 'POST':
+        g.reply = flask.request.form['query']
+        g.wat_reply = wat.do_stuff(g.reply)
+        #Replace \n with <br>:
+        #reply = reply.split('\n')
+        #g.wat_reply = '<br>'.join(reply)
+    else:
+        g.wat_reply = 'Waiting for query'
+    return flask.render_template('admin.html', p = g)
+ 
