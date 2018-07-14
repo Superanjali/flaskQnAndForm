@@ -164,7 +164,11 @@ class Wat():
             return_str += 'Get' + str(line[1:]) + '\n'
             response = self.assistant.get_intent(
                     workspace_id=self.workspace_id, intent= text, export=True)
-            answer =  [elem['text'] for elem in response['examples']]
+            answer =  '## Question:\n' + response['description'] +'\n'+\
+            '## Examples:\n' + str([elem['text'] for elem in response['examples']]) +'\n'
+            response = self.assistant.get_intent(
+                    workspace_id=self.workspace_id, intent= text+'_no', export=True)
+            answer +='## Counterexamples:\n' + str([elem['text'] for elem in response['examples']])
             return_str += str(answer) + '\n'
             #print(json.dumps(response, indent=2))
             #return_str += json.dumps(response,indent=2) + '\n'
@@ -247,8 +251,8 @@ class Wat():
         res = [x for x in response['intents']]
         res2 =[x['description'] for x in res if x['intent'].find('_no')< 0]
         #print(res)
-        print(json.dumps(res2, indent =2))
-        return 'bla bla'
+        #print(json.dumps(res2, indent =2))
+        return res2
 # Main code #########################################################
             
 if __name__ == '__main__':

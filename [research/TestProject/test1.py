@@ -69,6 +69,7 @@ def test():
             g.question_list = wat.question_list()
         if g.state >= 0:
             g.question = g.question_list[g.state]
+            g.intentdes = wat.do_stuff('g Q' + str(g.state + 1))
         elif g.state == -2:
             # Compute socres
             values = []
@@ -90,7 +91,10 @@ def admin():
     global wat
     if flask.request.method == 'POST':
         g.reply = flask.request.form['query']
-        g.wat_reply = wat.do_stuff(g.reply)
+        if g.reply == 'l':
+            g.wat_reply = str(wat.question_list())
+        else:
+            g.wat_reply = wat.do_stuff(g.reply)
         #Replace \n with <br>:
         #reply = reply.split('\n')
         #g.wat_reply = '<br>'.join(reply)
