@@ -230,3 +230,11 @@ class Wat():
         
 # Main code #########################################################
             
+if __name__ == '__main__':
+    wat  = Wat()
+    while True:
+        inp = input()
+        if inp == 'x':
+            print('Exit')
+        else:
+            print(wat.do_stuff(inp))

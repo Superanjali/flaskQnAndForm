@@ -11,7 +11,7 @@
             <hr>              
             <h3> Debug environment <h3><br>
             <pre>
-Username: {{p.reply}}
+Username: {{p.name}}
 Answers: {{p.score}}
 Score: {{p.join_values}}
 Comments: {{p.comments}}
@@ -32,6 +32,7 @@ Comments: {{p.comments}}
             <hr>
             <h3> Debug environment <h3><br>
             <pre>
+Username: {{p.name}}
 Last input: {{p.reply}}
 Answers: {{p.score}}
             </pre>
@@ -47,6 +48,7 @@ Answers: {{p.score}}
             <hr>
             <h3> Debug environment <h3><br>
             <pre>
+Username: {{p.name}}
 {% if p.state > 0 %}
 Last answer: {{ p.reply }}
 {% endif %}
