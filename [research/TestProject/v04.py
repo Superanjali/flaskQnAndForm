@@ -152,8 +152,10 @@ class Wat():
             return_str += 'Get' + str(line[1:]) + '\n'
             response = self.assistant.get_intent(
                     workspace_id=self.workspace_id, intent= text, export=True)
+            answer =  [elem['text'] for elem in response['examples']]
+            return_str += str(answer) + '\n'
             #print(json.dumps(response, indent=2))
-            return_str += json.dumps(response,indent=2) + '\n'
+            #return_str += json.dumps(response,indent=2) + '\n'
             '''Deprecated
         elif user == 'a':
             answer = input(self.qname[text]+'\n')
