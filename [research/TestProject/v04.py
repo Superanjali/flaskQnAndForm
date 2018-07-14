@@ -229,7 +229,14 @@ class Wat():
             return True , res[0][1]
         else:
             return False, res[0][1]
-        
+    
+    def question_list(self):
+        response = self.assistant.list_intents(workspace_id=self.workspace_id, export=True)
+        res = [x for x in response['intents']]
+        res2 =[x['description'] for x in res if x['intent'].find('_no')< 0]
+        #print(res)
+        print(json.dumps(res2, indent =2))
+        return 'bla bla'
 # Main code #########################################################
             
 if __name__ == '__main__':
@@ -238,5 +245,8 @@ if __name__ == '__main__':
         inp = input()
         if inp == 'x':
             print('Exit')
+            break
+        elif inp == 'l':
+            wat.question_list()
         else:
             print(wat.do_stuff(inp))

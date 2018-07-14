@@ -65,6 +65,8 @@ def test():
             g.state = -2
 
         # Computing outputs for your current state
+        if g.state == 0:
+            g.question_list = wat.question_list()
         if g.state >= 0:
             g.question = g.question_list[g.state]
         elif g.state == -2:
