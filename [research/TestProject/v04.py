@@ -21,27 +21,28 @@ def readExamples(Qno):
     
     answer = 'input/' + Qno + '_answers.txt'
     wrong = 'input/' + Qno + '_wrong.txt'
+    try:
+        with open(answer) as f:
+            ans = f.readlines()
+        # you may also want to remove whitespace characters like `\n` at the end of each line
+        ans = [x.strip() for x in ans if len(x.strip())] 
     
-    with open(answer) as f:
-        ans = f.readlines()
-    # you may also want to remove whitespace characters like `\n` at the end of each line
-    ans = [x.strip() for x in ans if len(x.strip())] 
-
-    csvname = 'input/' + Qno + '.csv'
-    with open(csvname,'w') as f:
-        for line in ans:
-            f.write(line+',yes\n')
-    
-    with open(wrong) as f:
-        wro = f.readlines()
-    # you may also want to remove whitespace characters like `\n` at the end of each line
-    wro = [x.strip() for x in wro if len(x.strip())] 
-    
-    with open(csvname,'a') as f:
-         for line in wro:
-            f.write(line+',no\n')   
-    #return ans,wro
-    return ans[0], ans[1:], wro
+        csvname = 'input/' + Qno + '.csv'
+        with open(csvname,'w') as f:
+            for line in ans:
+                f.write(line+',yes\n')
+        
+        with open(wrong) as f:
+            wro = f.readlines()
+        # you may also want to remove whitespace characters like `\n` at the end of each line
+        wro = [x.strip() for x in wro if len(x.strip())] 
+        
+        with open(csvname,'a') as f:
+             for line in wro:
+                f.write(line+',no\n')   
+        return ans[0],ans[1:],wro
+    except:
+        pass
 
 def identify(assistant, workspace_id, answer):
  
@@ -54,7 +55,7 @@ def identify(assistant, workspace_id, answer):
     return [[elem['intent'], elem['confidence']] for elem in response['intents']]
 
 
-def add_intent(assistant,workspace_id,title,q1Examples, Q_name):
+def add_intent(assistant,workspace_id, title, q1Examples, Q_name):
     examples = [{'text': line} for line in q1Examples]
     response = assistant.create_intent(
         workspace_id=workspace_id,
@@ -76,7 +77,6 @@ def listIntents(assistant,workspace_id):
     return res
 
 # Main code #########################################
-
 
 class Wat():
     def __init__(self):
@@ -116,9 +116,15 @@ class Wat():
                 return_str += 'Error: intent %s already exists' % text + '_no' + '\n'
                 return return_str
             return_str += 'Create ' + str(line[1:]) + '\n'
-            title, ans,wrong = readExamples(text) 
+            res = readExamples(text)
+            if not res:
+                return_str += 'Error: Definion file not found for %s' % text + '\n'
+                return return_str
+            title, ans, wrong  = res
            # print(ans,wrong)
-            return_str += str(ans) + str(wrong) +'\n'
+            return_str += '## Question:\n' + title + '\n' +\
+                '## Examples:\n' + str(ans) + '\n' +\
+                '## Counterexamples:\n' + str(wrong) +'\n'
             add_intent(self.assistant,self.workspace_id,title,ans,text)
             add_intent(self.assistant,self.workspace_id,title,wrong,text +'_no')
         elif user == 'd':
@@ -141,12 +147,16 @@ class Wat():
         elif user == 'u':
             #print ('Update',line[1:])
             return_str += 'Update ' + str(line[1:]) + '\n'
-            title, ans, wrong = readExamples(text)
+            res = readExamples(text)
+            if not res:
+                return_str += 'Error: Definion file not found for %s' % text + '\n'
+                return return_str
+            title, ans, wrong  = res
             response = self.assistant.update_intent(
                     workspace_id=self.workspace_id,
                     intent= text,
                     new_examples = ans,
-                    new_description = title)
+                    description = title)
             #print(json.dumps(response, indent=2))
             return_str += json.dumps(response, indent=2) + '\n'
         elif user == 'g':
@@ -154,10 +164,9 @@ class Wat():
             return_str += 'Get' + str(line[1:]) + '\n'
             response = self.assistant.get_intent(
                     workspace_id=self.workspace_id, intent= text, export=True)
-            print(json.dumps(response, indent=2))
-            answer = response["description"] + '\n'
-            answer +=  str([elem['text'] for elem in response['examples']])
-            return_str += answer + '\n'
+            answer =  [elem['text'] for elem in response['examples']]
+            return_str += str(answer) + '\n'
+            #print(json.dumps(response, indent=2))
             #return_str += json.dumps(response,indent=2) + '\n'
             '''Deprecated
         elif user == 'a':
@@ -232,7 +241,14 @@ class Wat():
             return True , res[0][1]
         else:
             return False, res[0][1]
-        
+    
+    def question_list(self):
+        response = self.assistant.list_intents(workspace_id=self.workspace_id, export=True)
+        res = [x for x in response['intents']]
+        res2 =[x['description'] for x in res if x['intent'].find('_no')< 0]
+        #print(res)
+        print(json.dumps(res2, indent =2))
+        return 'bla bla'
 # Main code #########################################################
             
 if __name__ == '__main__':
@@ -241,5 +257,8 @@ if __name__ == '__main__':
         inp = input()
         if inp == 'x':
             print('Exit')
+            break
+        elif inp == 'l':
+            wat.question_list()
         else:
             print(wat.do_stuff(inp))
