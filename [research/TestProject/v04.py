@@ -40,9 +40,14 @@ def readExamples(Qno):
         with open(csvname,'a') as f:
              for line in wro:
                 f.write(line+',no\n')   
-        return ans[0],ans[1:],wro
+        return ans[0],ans[1],ans[2:],wro
     except:
         pass
+
+def get_question_data(question_data, id_list):
+    for elem in id_list: 
+        question_data[elem] = readExamples(elem)
+    return question_data
 
 def identify(assistant, workspace_id, answer):
  
@@ -96,6 +101,7 @@ class Wat():
 
     def do_stuff(self, inp):
         return_str = ''
+        return_obj = None
         #print('choice:')
         return_str += ''
         line = inp.split()
@@ -111,30 +117,31 @@ class Wat():
             l = listIntents(self.assistant,self.workspace_id)
             if text in l:
                 return_str += 'Error: intent %s already exists' % text + '\n'
-                return return_str
+                return return_str, return_obj
             if text + '_no' in l:
                 return_str += 'Error: intent %s already exists' % text + '_no' + '\n'
-                return return_str
+                return return_str, return_obj
             return_str += 'Create ' + str(line[1:]) + '\n'
             res = readExamples(text)
             if not res:
                 return_str += 'Error: Definion file not found for %s' % text + '\n'
-                return return_str
-            title, ans, wrong  = res
+                return return_str, return_obj
+            title,img,ans, wrong  = res
+            return_obj = [text,title,img, ans, wrong]
            # print(ans,wrong)
             return_str += '## Question:\n' + title + '\n' +\
                 '## Examples:\n' + str(ans) + '\n' +\
                 '## Counterexamples:\n' + str(wrong) +'\n'
-            add_intent(self.assistant,self.workspace_id,title,ans,text)
-            add_intent(self.assistant,self.workspace_id,title,wrong,text +'_no')
+            add_intent(self.assistant,self.workspace_id,'string',ans,text)
+            add_intent(self.assistant,self.workspace_id,'string',wrong,text +'_no')
         elif user == 'd':
             l = listIntents(self.assistant,self.workspace_id)
             if not text in l:
                 return_str += 'Error: intent %s does not exist' % text + '\n'
-                return return_str
+                return return_str, return_obj
             if not text + '_no' in l:
                 return_str += 'Error: intent %s does not exist' % text + '_no' + '\n'
-                return return_str
+                return return_str, return_obj
             return_str += 'Delete ' + str(line[1:]) + '\n'
             response = self.assistant.delete_intent(workspace_id=self.workspace_id, intent = text)
             response = self.assistant.delete_intent(workspace_id=self.workspace_id, intent = text + '_no')
@@ -150,13 +157,21 @@ class Wat():
             res = readExamples(text)
             if not res:
                 return_str += 'Error: Definion file not found for %s' % text + '\n'
-                return return_str
-            title, ans, wrong  = res
+                return return_str, return_obj
+            title,img, ans, wrong  = res
+            return_obj = [text,title,img, ans, wrong]
             response = self.assistant.update_intent(
                     workspace_id=self.workspace_id,
                     intent= text,
                     new_examples = ans,
-                    description = title)
+                    description = 'string')
+            #print(json.dumps(response, indent=2))
+            return_str += json.dumps(response, indent=2) + '\n'
+            response = self.assistant.update_intent(
+                    workspace_id=self.workspace_id,
+                    intent= text+'_no',
+                    new_examples = wrong,
+                    description = 'string')
             #print(json.dumps(response, indent=2))
             return_str += json.dumps(response, indent=2) + '\n'
         elif user == 'g':
@@ -231,7 +246,7 @@ class Wat():
             #print(', '.join(result))
             return_str += ', '.join(result) + '\n'
     
-        return return_str
+        return return_str, return_obj
     
     def check_answer(self, Qname,ans):
         text = Qname
@@ -253,6 +268,7 @@ class Wat():
         #print(res)
         #print(json.dumps(res2, indent =2))
         return res2
+    
 # Main code #########################################################
             
 if __name__ == '__main__':
@@ -264,5 +280,6 @@ if __name__ == '__main__':
             break
         elif inp == 'l':
             wat.question_list()
+            wat.picture_list()
         else:
             print(wat.do_stuff(inp))
