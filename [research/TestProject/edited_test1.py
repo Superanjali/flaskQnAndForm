@@ -47,6 +47,7 @@ g = Globals()
 def test():
     global g
     global wat
+    qd = g.question_data
     if flask.request.method == 'GET':
         g.state = -1
     elif flask.request.method == 'POST':
@@ -68,17 +69,18 @@ def test():
 
         # Computing outputs for your current state
         if g.state == 0:
-            g.question_list = wat.question_list()
-            
+            g.question_list = wat.readquestions('input/lables.txt')
+            g.pic = g.question_list[g.state][1]
         if g.state >= 0:
             g.picture = g.picture_list[g.state]
-            g.intentdes, qdata = wat.do_stuff('g Q' + str(g.state + 1))
+            g.intentdes, qdata = g.question_list[g.state]
+            
             #question_data[]
         elif g.state == -2:
             # Compute socres
             values = []
             for i,elem in enumerate(g.score):
-                values.append(wat.check_answer('Q'+str(i + 1),elem))
+                values.append(wat.check_answer(g.question_list[i],elem))
             g.join_score = ','.join(g.score)
             g.join_values = ','.join([str(x) for x in values])
             g.total_score = sum(elem[1] for elem in values)
@@ -88,9 +90,8 @@ def test():
             g.previous_test = True
         
         elif g.state == -1:
-            qd = g.question_data
-            qd = wat_api.get_question_data(qd, ['Q1', 'Q2', 'Q3', 'Q4'])
-            print(json.dumps(qd, indent = 2))
+            #qd = wat_api.get_question_data(qd, ['Q1', 'Q2', 'Q3', 'Q4'])
+            #print(json.dumps(qd, indent = 2))
              
             
     return flask.render_template('test_form.html', p = g)
@@ -112,12 +113,13 @@ def admin():
         g.wat_reply = 'Waiting for query'
     return flask.render_template('admin.html', p = g)
 
-# %%
-import json
 '''
+import json
+
 qd = {}    
 qd = wat_api.get_question_data(qd, ['Q1', 'Q3'])
 print(json.dumps(qd, indent = 2))
-qd = wat_api.get_question_data(qd, ['Q2', 'Q4'])
+qd = wat_api.get_question_data(qd, ['Q1','Q2', 'Q4'])
 print(json.dumps(qd, indent = 2))
+ans = qd
 '''

@@ -44,6 +44,19 @@ def readExamples(Qno):
     except:
         pass
 
+def readquestions(reader):
+    try:
+        with open(reader) as f:
+            labels = f.readlines()
+        # you may also want to remove whitespace characters like `\n` at the end of each line
+        labels = [x.strip() for x in labels if len(x.strip())] 
+        #print(labels)
+        return labels
+    except:
+        print('error in readquestions')
+        pass
+
+
 def get_question_data(question_data, id_list):
     for elem in id_list: 
         question_data[elem] = readExamples(elem)
