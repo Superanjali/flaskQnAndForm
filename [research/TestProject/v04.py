@@ -40,6 +40,7 @@ def readExamples(Qno):
         with open(csvname,'a') as f:
              for line in wro:
                 f.write(line+',no\n')   
+        '''returns question,img,answer, wrong answers'''
         return ans[0],ans[1],ans[2:],wro
     except:
         pass
