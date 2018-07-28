@@ -7,7 +7,7 @@ app = flask.Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello, test World!'
+    return 'is  it running'
 
 @app.route('/pages/<number>')
 def pg1(number):
@@ -94,7 +94,7 @@ def test():
             #print(json.dumps(qd, indent = 2))
             pass
             
-    return flask.render_template('test_form.html', p = g)
+    return flask.render_template('test_form2.html', p = g)
 
 @app.route('/admin', methods=['POST', 'GET'])
 def admin():

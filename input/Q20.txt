@@ -1,0 +1,7 @@
+Graph one shows the length of two springs, P and Q which changed when loads were hung from them. Based on graph 1, which spring P or Q can be stretched more easily? Give a reason for your answer.
+%%image
+%%right
+P can be stretched more easily as it increased in lenght more than Q even though both had the same loads hung on them.
+%%wrong
+Q can be stretched more easily cause it lengthened less.
+P because it grew larger.

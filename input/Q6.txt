@@ -1,0 +1,11 @@
+State one reason plants need to disperse their seeds.
+%%image
+%%right
+It is to prevent overcrowding and redue competition for space, sunlight, water and minerals.
+So that overcrowding does not occur and competition for space,sunlight, water and minerals is reduced.
+%%wrong
+So that the seeds do not compete for sunlight.
+So that the seeds do not compete for space.
+So that overcrowding does not occour.
+So that competition does not occour between the seeds.
+To reduce competition for space, water, sunlight, food

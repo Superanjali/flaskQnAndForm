@@ -1,0 +1,8 @@
+Joan carried out the following experiment. She clamped a magnet as shown. A metal clip tied to the bench by a string of length 28cm, was found to remain in the air. Give a reason why the meatal clip did not drop.
+%%image
+%%right
+The metal clip is attracted to the magnet.
+Since the metal clip is attracted to the magnet, it did not drop. 
+%%wrong
+The metal clip grew wings
+It became lighter than air.

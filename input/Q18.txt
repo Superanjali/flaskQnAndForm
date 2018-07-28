@@ -1,0 +1,7 @@
+The diagram below shows a toy. Each vane is white on one side and black on the other. When ahmad shone a torch on the toy, the vane started rotating. State the energy changed that occoured.
+%%image
+%%right
+Light and heat energy are converted to kinetic energy.
+%%wrong
+IDK
+The light energy became moving energy.

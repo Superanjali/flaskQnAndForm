@@ -1,0 +1,9 @@
+Two butterflies A and B look similar. Predattors remember that butterfly A is poisonous. What is the advantage of butterfly B looking like butterfly A?
+%%image
+%%right
+The predators will not hunt butterfly B.
+Butterfly B will not be hunted by predators as it looks similar to butterfly A so predators think it is poisonous.
+Butterfly B will not be hunted by predators.
+%%wrong
+They can dress up the same and go to a party as twins.
+no advantage lah!

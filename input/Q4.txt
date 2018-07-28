@@ -1,0 +1,9 @@
+Sarah filled a beaker to the brim. Then she placed some marbles in the beaker. Some water splashed out of the beaker. Why?
+%%image
+%%right
+The marbles took up space in the beaker pushing the water out of it.
+The marbles displaced the water
+%%wrong
+The water displaced the marbles
+Water is lighter then marbles
+the water floated on the marbles
