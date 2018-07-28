@@ -1,0 +1,9 @@
+A mug was placed in front of a torch and it's shadow formed on the wall. What caused it's shadow to be formed?
+%%image
+
+%%positive
+Light was blocked by the mug.
+The mug blocked the torchlight.
+%%negative
+The mug blocked the light from the torch so it's shadow was reflected on the wall.
+The mug's shadow was formed on the wall because it could not allow light to pass through it.

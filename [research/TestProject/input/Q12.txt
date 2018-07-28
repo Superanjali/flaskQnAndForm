@@ -1,0 +1,7 @@
+A plant produces berries which are small fruits that may contain many seeds. Birds eat these berries and pass out the undigested seeds in their droopings. This helps the plant to disperse its seeds. State an advantage of this method of dispersing seeds for the plant.
+%%image
+https://drive.google.com/uc?id=1soiAUUIfOy-Cxxe4hhDTtavUMaJCSvTc
+%%positive
+The seeds are dispersed away from the parent plant at a greater distance.
+To prevent overcrowding near the parent plant.
+%%negative

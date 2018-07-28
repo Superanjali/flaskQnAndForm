@@ -1,5 +1,8 @@
 In a experiment, Jakcy put a healthy plant in a container of water as shown below. A layer of oil was added to the water. After a few hours, the water level in the container was lower. Give a reason why the water level was lower after a few hours.
+%%image
 https://drive.google.com/uc?id=1vlgTQtcrQDEKzjN6l_f3j189AaH3UR6r
+%%positive
 The plant absorbed the water in the container.
 The water level decreased as the plants absorbed the water in the container.
-Since the plants absorbed the water in the container, the water level decreased. 
+Since the plants absorbed the water in the container, the water level decreased.
+%%negative
