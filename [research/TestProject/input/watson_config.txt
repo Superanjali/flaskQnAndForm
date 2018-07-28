@@ -1,0 +1,3 @@
+username=bd8cc8ab-442f-40c9-8c27-e2835b7d3745
+password=6o4z02ADfI0z
+workspace_id=d08163fc-41bd-433a-b3a2-a31bda4491ab

@@ -1,0 +1,15 @@
+State a reason why a scorpion is not an insect.
+%%image
+http://moziru.com/images/drawn-scorpion-cartoon-13.jpg
+%%positive
+It has eight legs
+It does not have three body parts
+It does not possess antennae
+It does not have wings
+%%negative
+It has seven legs
+It has nine legs
+It has three body parts
+It has one body part
+It possess antennae
+It has wings

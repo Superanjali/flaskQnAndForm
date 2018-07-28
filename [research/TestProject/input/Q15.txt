@@ -1,0 +1,6 @@
+The diagram below shows the movment of water in a plant. What happens to the water after it reaches the leaves?
+%%image
+https://drive.google.com/uc?id=1l_jpuTF5ZXwApqnvhpLu_gzVdcfcLNgP
+%%positive
+Water is used by the leaves for photosynthesis.
+%%negative

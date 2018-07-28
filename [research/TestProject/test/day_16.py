@@ -17,9 +17,9 @@ else:
 
 # %%
 try:
-    print('')
-except:
-    print('Bad string')
+    print(int(input()))
+except Exception as e:
+    print(e)
 
 
 
